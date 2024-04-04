@@ -297,9 +297,9 @@
           <small class="white">npm i antd</small>
         </section>
         <section data-auto-animate>
-          <h3>Import antd.less</h3>
-          <pre><code class="jsx" data-trim data-noescape data-line-numbers="1"><script type="text/template">
-            import "./App.less";
+          <h3>Import ConfigProvider</h3>
+          <pre><code class="jsx" data-trim data-noescape data-line-numbers="1,10-20"><script type="text/template">
+            import { ConfigProvider, theme } from "antd";
             import { ApolloProvider } from "@apollo/client";
             import { ThemeProvider } from "@emotion/react";
             import apClient from "./config/apollo";
@@ -308,19 +308,25 @@
 
             export default function App() {
               return (
-                <ApolloProvider client={apClient()}>
-                  <ThemeProvider theme={defaultTheme}>
-                    <RootRoutes />
-                  </ThemeProvider>
-                </ApolloProvider>
+                <ConfigProvider
+                  theme={{
+                    algorithm: theme.darkAlgorithm,
+                    token: {
+                      colorPrimary: defaultTheme.colors.primary,
+                      colorLink: defaultTheme.colors.primary,
+                      colorLinkHover: defaultTheme.colors.primary500,
+                      fontFamily: '"Noto Sans", sans-serif',
+                    },
+                  }}
+                >
+                  <ApolloProvider client={apClient()}>
+                    <ThemeProvider theme={defaultTheme}>
+                      <RootRoutes />
+                    </ThemeProvider>
+                  </ApolloProvider>
+                </ConfigProvider
               );
             }
-          </script></code></pre>
-        </section>
-        <section data-auto-animate>
-          <h3>App.less</h3>
-          <pre><code class="jsx" data-trim data-noescape data-line-numbers="1"><script type="text/template">
-            @import "~antd/dist/antd.less";
           </script></code></pre>
         </section>
         <section data-auto-animate>
@@ -379,49 +385,6 @@
                 expect(text).toBeInTheDocument();
               });
             });            
-          </script></code></pre>
-        </section>
-        <section data-auto-animate>
-          <h3>Craco</h3>
-          <small>npm i @craco/craco craco-less antd-dayjs-webpack-plugin --force</small>
-          <pre><code class="jsx" data-trim data-noescape data-line-numbers><script type="text/template">
-            ...
-            "start": "craco start",
-            "build": "craco build",
-            ...
-          </script></code></pre>
-        </section>
-        <section data-auto-animate>
-          <h3>Craco Config</h3>
-          <pre><code class="jsx" data-trim data-noescape data-line-numbers><script type="text/template">
-            const AntdDayjsWebpackPlugin = require("antd-dayjs-webpack-plugin");
-            const CracoLessPlugin = require("craco-less");
-
-            module.exports = {
-              babel: {
-                plugins: ["@emotion"],
-              },
-              webpack: {
-                plugins: [new AntdDayjsWebpackPlugin()],
-              },
-              plugins: [
-                {
-                  plugin: CracoLessPlugin,
-                  options: {
-                    lessLoaderOptions: {
-                      lessOptions: {
-                        modifyVars: {
-                          "@primary-color": "rgb(255, 103, 0)",
-                          "@font-family": '"Poppins", sans-serif',
-                        },
-                        javascriptEnabled: true,
-                      },
-                    },
-                  },
-                },
-              ],
-            };
-
           </script></code></pre>
         </section>
       </section>
